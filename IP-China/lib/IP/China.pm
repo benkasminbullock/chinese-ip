@@ -1,9 +1,3 @@
-=head1 NAME
-
-IP::China - is an internet address from China?
-
-=cut
-
 package IP::China;
 require Exporter;
 @ISA = qw(Exporter);
