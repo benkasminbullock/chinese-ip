@@ -1,9 +1,11 @@
 build\.pl
 blib/.*
 .gitignore
-.git/.*
 Makefile$
 pm_to_blib
 MYMETA.*
 .*.bak
-.(?:c|o|bs)
+\.(?:o|bs|~\d+~|tmpl)$
+China\.c
+IP-China-[0-9\.]+\.tar\.gz$
+IP-China-[0-9\.]+\/

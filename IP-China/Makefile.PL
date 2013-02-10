@@ -3,7 +3,7 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 my $pm = 'lib/IP/China.pm';
-my $repo = 'https://github.com/benkasminbullock/IP-China';
+my $repo = 'https://github.com/benkasminbullock/chinese-ip';
 
 WriteMakefile (
     NAME => 'IP::China',
