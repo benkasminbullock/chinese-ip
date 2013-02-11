@@ -9,3 +9,4 @@ MYMETA.*
 China\.c
 IP-China-[0-9\.]+\.tar\.gz$
 IP-China-[0-9\.]+\/
+^makeitfile$
