@@ -17,6 +17,8 @@ my @tests = (
     # Test extrema
     ['255.255.255.255' => 0],
     ['0.0.0.0' => 0],
+    # Test IPs listed in the errata.
+    ['74.125.16.64' => 0],
 );
 
 for my $test (@tests) {

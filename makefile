@@ -14,7 +14,7 @@ block-china.h:  block-china.c
 	cfunctions -inc block-china.c
 
 block-china-data.c:	get-ip-addresses.pl
-	./get-ip-addresses.pl > $@
+	./get-ip-addresses.pl --outfile $@
 
 clean:
 	-rm -f $(OBJ) block-china.h block-china-data.c block-china-test

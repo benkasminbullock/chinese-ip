@@ -70,7 +70,7 @@ int main (int argc, char ** argv)
     for (i = 1; i < argc; i++) {
         unsigned long ipAddr;
         ipAddr = ip_to_int (argv[i]);
-        //        printf ("%X\n", ipAddr);
+        printf ("%X\n", ipAddr);
         printf ("%d\n", chinese_ip (ipAddr));
     }
     return 0;
