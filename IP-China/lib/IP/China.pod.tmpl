@@ -17,7 +17,9 @@ IP::China - decide whether an internet address is from China
 
     my $is_chinese = chinese_ip ('255.255.255.255');
 
-Given an internet protocol string, decide whether it is Chinese or not.
+Given an internet protocol string, decide whether it is Chinese or
+not. The return value is a true value (-1) if the address is from
+China, and a false value (0) if the address is not from China.
 
 =head1 UPDATES
 
@@ -26,9 +28,11 @@ may change. The script to build updates is included in the git
 repository for this distribution. Please refer to F<Makefile.PL> for
 the git repository URL.
 
+The script also includes some errata for the MaxMind list.
+
 =head1 SEE ALSO
 
-L<http://www.lemoda.net/networking/block-china> contains an article
+L<http://www.lemoda.net/networking/block-china/> contains an article
 and some links to further information.
 
 =head1 AUTHOR
