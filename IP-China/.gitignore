@@ -1,2 +1,7 @@
 # Generated from Makefile.PL
 Makefile
+China.bs
+China.c
+block-china.c
+lib/IP/China.pod
+makeitfile
