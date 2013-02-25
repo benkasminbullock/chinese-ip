@@ -17,6 +17,7 @@ unsigned int ip_to_int (char * ip)
     unsigned long ipAddr;
     sscanf (ip, "%hhu.%hhu.%hhu.%hhu", &a, &b, &c, &d);
     ipAddr = ( a << 24 ) | ( b << 16 ) | ( c << 8 ) | d;
+    printf ("ip %s -> %X\n", ip, ipAddr);
     return ipAddr;
 }
 
@@ -37,7 +38,8 @@ int chinese_ip (unsigned ip)
             fprintf (stderr, "There is bad logic in the search.\n");
             exit (1);
         }
-        //printf ("i is %d; Division is %d\n", i, division);
+        printf ("i is %d; Division is %d, start is %X end is %X\n",
+                i, division, china_ips[i].start, china_ips[i].end);
         division /= 2;
         if (division == 0) {
             division = 1;
