@@ -11,14 +11,30 @@ extern china_ip_t china_ips[];
 extern int n_china_ips;
 #endif /* def HEADER */
 
-unsigned int ip_to_int (char * ip)
+unsigned int ip_to_int (const char * ip)
 {
-    unsigned char a, b, c, d;
-    unsigned long ipAddr;
-    sscanf (ip, "%hhu.%hhu.%hhu.%hhu", &a, &b, &c, &d);
-    ipAddr = ( a << 24 ) | ( b << 16 ) | ( c << 8 ) | d;
-    printf ("ip %s -> %X\n", ip, ipAddr);
-    return ipAddr;
+    unsigned v = 0;
+    int i;
+    const char * start;
+    start = ip;
+    for (i = 0; i < 4; i++) {
+        char c;
+        int n = 0;
+        while (1) {
+            c = * start;
+            start++;
+            if (c >= '0' && c <= '9') {
+                n *= 10;
+                n += c - '0';
+            }
+            else {
+                break;
+            }
+        }
+        v *= 256;
+        v += n;
+    }
+    return v;
 }
 
 #define NOTFOUND 0
@@ -38,8 +54,10 @@ int chinese_ip (unsigned ip)
             fprintf (stderr, "There is bad logic in the search.\n");
             exit (1);
         }
+#if 0
         printf ("i is %d; Division is %d, start is %X end is %X\n",
                 i, division, china_ips[i].start, china_ips[i].end);
+#endif /* 0 */
         division /= 2;
         if (division == 0) {
             division = 1;
