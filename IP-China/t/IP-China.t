@@ -19,6 +19,8 @@ my @tests = (
     ['0.0.0.0' => 0],
     # Test IPs listed in the errata.
     ['74.125.16.64' => 0],
+    # Test IPs listed in the "additional.txt" file.
+    ['218.93.127.117' => -1],
 );
 
 for my $test (@tests) {

@@ -1,3 +1,7 @@
+0.05
+
+This release changes to depend on another module, IP::Tools.
+
 0.04
 
 This release addresses a bug which only affects Microsoft Windows.

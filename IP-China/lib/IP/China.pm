@@ -5,6 +5,7 @@ require Exporter;
 use warnings;
 use strict;
 our $VERSION = 0.04;
+use IP::Tools;
 require XSLoader;
 XSLoader::load ('IP::China', $VERSION);
 1;

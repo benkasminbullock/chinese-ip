@@ -3,15 +3,23 @@ use warnings;
 use strict;
 use Getopt::Long;
 
+our $ip_re = qr/
+                   (?:\d+\.){3}
+                   \d+
+               /x;
+
 my $outfile = 'block-china-data.c';
 my $infile = '/home/ben/data/maxmind-geolite/GeoIPCountryWhois.csv';
+my $additional = 'additional.txt';
 
 my $ok = GetOptions (
     "verbose" => \my $verbose,
     "help" => \my $help,
     "outfile=s" => \$outfile,
     "infile=s" => \$infile,
+    "additional=s" => \$additional
 );
+
 if (! $ok || $help) {
     usage ();
     exit;
@@ -32,7 +40,12 @@ qr/
       "
 /x;
 
+# This contains the list of all the IP address blocks from China.
+
 my @china;
+
+# Read the MaxMind file.
+
 open my $in, "<", $infile or die $!;
 while (<$in>) {
     if (/,\"CN\",/) {
@@ -43,20 +56,32 @@ while (<$in>) {
             }
             next;
         }
-        my ($start, $end) = get_start_end ($_);
-        push @china, [$start, $end];
+        get_start_end (\@china, $_);
     }
 }
 close $in or die $!;
 
-# Check that the IPs are in sorted order.
+# Read the additional file.
+
+# open my $add, "<", $additional or die $!;
+# while (<$add>) {
+#     range (\@china, $_);
+# }
+# close $add or die $!;
+
+# Sort the ranges into order.
 
 my @sorted = sort {$a->[0] <=> $b->[0]} @china;
-for my $i (0..$#sorted) {
-    if ($sorted[$i] != $china[$i]) {
-        die;
+for my $i (0..$#sorted - 1) {
+    my $end = $sorted[$i]->[1];
+    my $start = $sorted[$i + 1]->[0];
+    if ($end >= $start) {
+        die "Overlap $end $start at $i";
     }
 }
+
+# Write the C file.
+
 open my $out, ">", $outfile or die $!;
 my $n_china_ips = scalar @china;
 print $out <<EOF;
@@ -65,9 +90,9 @@ available from http://www.maxmind.com. The GeoLite databases are
 distributed under the Creative Commons Attribution-ShareAlike 3.0
 Unported License. */
 
-#include "block-china.h"
+#include "ip-tools.h"
 int n_china_ips = $n_china_ips;
-china_ip_t china_ips[$n_china_ips] = {
+ip_block_t china_ips[$n_china_ips] = {
 EOF
 for (@china) {
     my ($start, $end) = @$_;
@@ -83,11 +108,30 @@ exit;
 
 sub get_start_end
 {
-    my ($line) = @_;
+    my ($china, $line) = @_;
     my (undef, undef, $start, $end) = split /,/, $line;
     $start =~ s/"//g;
     $end =~ s/"//g;
-    return $start, $end;
+    push @$china, [$start, $end];
+}
+
+# Given a line of the form 1.2.3.4 - 5.6.7.8 from the file specified
+# by $additional, push it into the array.
+
+sub range
+{
+    my ($china, $line) = @_;
+    if ($line =~ /^\s*($ip_re)\D+($ip_re)\s*$/) {
+        my $sip = $1;
+        my $eip = $2;
+        my $start = ip_to_int ($sip);
+        my $end = ip_to_int ($eip);
+        push @$china, [$start, $end];
+    }
+    else {
+        chomp $line;
+        warn "$additional:$.: Unparsed line '$line'.\n";
+    }
 }
 
 # Print a usage message.
@@ -103,6 +147,22 @@ output file is called '$outfile'.
 --help		Print this message.
 --infile <f>	Specify the input file as f.
 --outfile <f>	Set the name of the output C file to f.
+--additional <f>	Specify an additional file of addresses.
 EOF
     exit;
+}
+
+sub ip_to_int
+{
+    my ($ip) = @_;
+    my @bytes = split /\./, $ip;
+    if (@bytes != 4) {
+        die "Bad ip $ip";
+    }
+    my $val = 0;
+    for (@bytes) {
+        $val *= 0x100;
+        $val += $_;
+    }
+    return $val;
 }

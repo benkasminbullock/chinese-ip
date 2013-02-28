@@ -6,3 +6,5 @@ block-china.c
 lib/IP/China.pod
 makeitfile
 MANIFEST
+ip-tools.[ch]
+block-china-data.h

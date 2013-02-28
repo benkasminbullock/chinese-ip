@@ -13,6 +13,7 @@ WriteMakefile (
     AUTHOR => 'Ben Bullock <bkb@cpan.org>',
     LICENSE => 'perl',
     PREREQ_PM => {
+        'IP::Tools' => 0.01,
     },
     META_MERGE => {
         resources => {
@@ -20,5 +21,5 @@ WriteMakefile (
             bugtracker => "$repo/issues",
         },
     },
-    OBJECT => 'China.o block-china.o block-china-data.o',
+    OBJECT => 'China.o block-china-data.o',
 );

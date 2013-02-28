@@ -8,7 +8,10 @@ perl_build (
     ],
     c => [{
         dir => '..',
-        stems => ['block-china', 'block-china-data'],
-    },],
+        stems => ['block-china-data'],
+    }, {
+        dir => '/home/ben/projects/IP-Tools',
+        stems => ['ip-tools'],
+    }],
 );
 exit;
