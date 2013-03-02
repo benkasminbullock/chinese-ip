@@ -1,7 +1,7 @@
 0.06
 
-This release incorporates compilation changes which only affect
-Microsoft Windows.
+Compilation changes which only affect Microsoft Windows.
+Uses "GeoLite Country" database for March 2013.
 
 0.05
 
