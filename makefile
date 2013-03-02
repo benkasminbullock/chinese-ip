@@ -29,7 +29,8 @@ ip-tools.h:	$(IPTDIR)/$@
 	cp -f $(IPTDIR)/$@ .
 
 clean:
-	-rm -f $(OBJ) block-china.h block-china-data.c block-china-test
+	-rm -f $(OBJ) block-china.h block-china-data.[ch] block-china-test \
+	ip-tools.[ch]
 
 test:	test.pl block-china-test
 	./test.pl
