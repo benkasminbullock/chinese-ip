@@ -12,9 +12,10 @@ my $object = 'China.o block-china-data.o';
 
 # I am unable to find a way to make Windows find the functions in
 # "IP::Tools", so for Windows users, we include this file in the
-# compilation.
+# compilation. The same problem seems to occur for cygwin, see
+# http://www.cpantesters.org/cpan/report/dc6555ce-8355-11e2-b560-a78f6eea78f7
 
-if ($^O eq 'MSWin32') {
+if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
     $object .= ' ip-tools.o';
 }
 
