@@ -1,6 +1,6 @@
 CFLAGS=-Wall -g
 OBJ=block-china-test.o block-china-data.o ip-tools.o
-INFILE=/home/ben/data/maxmind-geolite/GeoIPCountryWhois.csv
+INFILE=/home/ben/data/maxmind-geolite/GeoLite2-Country-CSV_20150804/GeoLite2-Country-Blocks-IPv4.csv
 
 block-china-test:	$(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@

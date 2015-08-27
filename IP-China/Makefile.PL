@@ -35,4 +35,7 @@ WriteMakefile (
         },
     },
     OBJECT => $object,
+    # Speculated minimum version of Perl necessary, there are no
+    # failed tests for the previous version of the module.
+    MIN_PERL_VERSION => '5.006001',
 );

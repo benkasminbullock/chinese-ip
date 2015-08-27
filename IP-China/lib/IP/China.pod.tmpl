@@ -13,13 +13,15 @@ IP::China - decide whether an internet address is from China
 
 =head1 FUNCTIONS
 
+The module has only one function:
+
 =head2 chinese_ip
 
     my $is_chinese = chinese_ip ('255.255.255.255');
 
-Given an internet protocol string, decide whether it is Chinese or
-not. The return value is a true value (-1) if the address is from
-China, and a false value (0) if the address is not from China.
+Given an internet protocol string (version 4), decide whether it is
+Chinese or not. The return value is a true value (-1) if the address
+is from China, and a false value (0) if the address is not from China.
 
 =head1 UPDATES
 
@@ -29,6 +31,16 @@ repository for this distribution. Please refer to F<Makefile.PL> for
 the git repository URL.
 
 The script also includes some errata for the MaxMind list.
+
+=head1 ERRATA
+
+The data block as follows:
+
+    74.125.16.64/26,1814991,6252001,,0,0
+
+is recorded as in China (country code 1814991), but this block seems
+to belong to Google & not be in China, so this is discounted from the
+results.
 
 =head1 SEE ALSO
 
@@ -43,11 +55,10 @@ Ben Bullock, <bkb@cpan.org>
 
 This product includes GeoLite data created by MaxMind, available from
 http://www.maxmind.com. The GeoLite databases are distributed under
-the Creative Commons Attribution-ShareAlike 3.0 Unported License. All
-of the GeoLite data is in the file F<block-china-data.c> of the
-distribution.
+the Creative Commons Attribution-ShareAlike 3.0 Unported License. The
+GeoLite data is in the file F<block-china-data.c> of the distribution.
 
-All other files are copyright (C) 2013 Ben Bullock. You can use, copy,
-modify and redistribute these files under the Perl Artistic Licence or
-the GNU General Public Licence.
+All other files are copyright (C) 2013-2015 Ben Bullock. You may use,
+copy, modify and redistribute these files under the Perl Artistic
+Licence or the GNU General Public Licence, version two or later.
 
