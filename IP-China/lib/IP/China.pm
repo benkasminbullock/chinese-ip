@@ -4,7 +4,7 @@ require Exporter;
 @EXPORT_OK = qw/chinese_ip/;
 use warnings;
 use strict;
-our $VERSION = '20150804';
+our $VERSION = '20160412';
 require XSLoader;
 XSLoader::load ('IP::China', $VERSION);
 1;

@@ -1,6 +1,19 @@
-Unreleased
+20160412 2016-04-27
 
-* Remove false dependence on IP::Tools
+* Data update
+
+20151105 2015-11-05
+
+* Data update
+
+20151006 2015-10-07
+
+* Data update
+
+20150901 2015-09-08
+
+* Data update
+* Remove dependence on IP::Tools (now deleted from CPAN)
 * Note on removal of Google IP block from results in documentation.
 
 20150804 2015-08-27

@@ -42,7 +42,7 @@ my @china;
 
 open my $in, "<", $infile or die $!;
 while (<$in>) {
-    if (/,1814991,/) {
+    if (/,"CN",/) {
         if (/$errata/) {
             if ($verbose) {
                 chomp;
@@ -103,17 +103,20 @@ exit;
 sub get_start_end
 {
     my ($china, $line) = @_;
-    my ($cidr) = split /,/, $line;
-    if ($cidr =~ $cidr_re) {
-	my $ip = $1;
-	my $logmask = $2;
+    my ($startip, $endip, $start, $end) = split /,/, $line;
+    $start =~ s/"//g;
+    $end =~ s/"//g;
+    push @$china, [$start, $end];
+    # if ($cidr =~ $cidr_re) {
+    # 	my $ip = $1;
+    # 	my $logmask = $2;
 	
-	my ($start, $end) = cidr_to_ip_range ($ip, $logmask);
-	push @$china, [$start, $end];
-    }
-    else {
-	print STDERR "$.: '$cidr' doesn't match regex.\n";
-    }
+    # 	my ($start, $end) = cidr_to_ip_range ($ip, $logmask);
+    # 	push @$china, [$start, $end];
+    # }
+    # else {
+    # 	print STDERR "$.: '$cidr' doesn't match regex.\n";
+    # }
 }
 
 # Given a line of the form 1.2.3.4 - 5.6.7.8 from the file specified
