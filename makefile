@@ -24,10 +24,14 @@ ip-tools.o:	ip-tools.c ip-tools.h
 IPTDIR=/home/ben/projects/IP-Tools
 
 ip-tools.c:	$(IPTDIR)/$@
+	if [ -f $@ ]; then chmod 0644 $@; fi
 	cp -f $(IPTDIR)/$@ .
+	chmod 0444 $@
 
 ip-tools.h:	$(IPTDIR)/$@
+	if [ -f $@ ]; then chmod 0644 $@; fi
 	cp -f $(IPTDIR)/$@ .
+	chmod 0444 $@
 
 clean:
 	-rm -f $(OBJ) block-china.h block-china-data.[ch] block-china-test \

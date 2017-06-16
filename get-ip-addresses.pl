@@ -90,7 +90,7 @@ ip_block_t china_ips[$n_china_ips] = {
 EOF
 for (@china) {
     my ($start, $end) = @$_;
-    printf $out "{0x%X,0x%X},\n", $start, $end;
+    printf $out "{0x%X, 0x%X},\n", $start, $end;
 }
 print $out <<EOF;
 };
