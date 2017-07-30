@@ -3,9 +3,7 @@ use warnings;
 use strict;
 use Perl::Build;
 perl_build (
-    pod => [
-        'lib/IP/China.pod',
-    ],
+    make_pod => "./make-pod.pl",
     c => [{
         dir => '..',
         stems => ['block-china-data'],

@@ -1,3 +1,14 @@
+[% MACRO example(file) BLOCK %]
+[%- pl = "examples/" _ file _ ".pl" -%]
+[%- out = "examples/" _ file _ "-out.txt" -%]
+[% INCLUDE $pl | xtidy %]
+
+produces output
+
+[% INCLUDE $out | xtidy %]
+
+(This example is included as L<F<[% pl %]>|https://fastapi.metacpan.org/source/BKB/[% info.name %]-[% version %]/[% pl %]> in the distribution.)
+[% END %]
 [% start_year=2013 %]
 =encoding UTF-8
 
@@ -7,10 +18,16 @@ IP::China - decide whether an internet address is from China
 
 =head1 SYNOPSIS
 
-    use IP::China 'chinese_ip';
-    if (chinese_ip ('127.0.0.1')) {
-        print '你好';
-    }
+[% INCLUDE "synopsis.pl" | xtidy %]
+
+=head1 VERSION
+
+This documents [% info.colon %] version [% info.version %]
+corresponding to git commit L<[% commit.commit %]|[% info.repo
+%]/commit/[% commit.commit %]> released on [% commit.date %]. 
+
+This module incorporates the MaxMind GeoLite data of date [%
+info.version %] (YYYYMMDD).
 
 =head1 DESCRIPTION
 
@@ -31,9 +48,8 @@ is from China, and a false value (0) if the address is not from China.
 =head1 UPDATES
 
 The module will be periodically updated. Allocated addresses for China
-may change. The script to build updates is included in the git
-repository for this distribution. Please refer to F<Makefile.PL> for
-the git repository URL.
+may change. The script to build updates is included in L<the git
+repository|[% info.repo %]> for this distribution.
 
 The script also includes some errata for the MaxMind list.
 
@@ -57,7 +73,7 @@ and some links to further information.
 =head2 DATA COPYRIGHT
 
 This product includes GeoLite data created by MaxMind, available from
-http://www.maxmind.com. The GeoLite databases are distributed under
+L<http://www.maxmind.com>. The GeoLite databases are distributed under
 the Creative Commons Attribution-ShareAlike 3.0 Unported License. The
 GeoLite data is in the file F<block-china-data.c> of the distribution.
 
