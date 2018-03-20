@@ -11,5 +11,6 @@ perl_build (
         dir => '/home/ben/projects/IP-Tools',
         stems => ['ip-tools'],
     }],
+    clean => "./clean.pl",
 );
 exit;
