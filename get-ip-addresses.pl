@@ -6,6 +6,7 @@ use IP::Tools ':all';
 use Date::Calc 'Localtime';
 
 my $verbose;
+#my $verbose = 1;
 
 my ($year, $month) = Localtime (time ());
 my $nowmonth = sprintf ("%04d%02d", $year, $month);
@@ -16,7 +17,7 @@ my $topdir = '/home/ben/data/maxmind-geolite';
 my @dirs = <$topdir/GeoLite2-Country-CSV_*>;
 @dirs = grep { -d $_ } @dirs;
 if ($verbose) {
-print "Directories: @dirs\n";
+    print "Directories: @dirs\n";
 }
 my %dates;
 my $bestdate;
@@ -114,6 +115,8 @@ for my $i (0..$#sorted - 1) {
     }
 }
 
+@china = simplify_blocks (\@china, $verbose);
+
 # Write the C file.
 
 open my $out, ">", $outfile or die $!;
@@ -198,3 +201,41 @@ EOF
     exit;
 }
 
+# Given a list of start/end blocks, turn contiguous blocks into a single block.
+
+sub simplify_blocks
+{
+    my ($blocks, $verbose) = @_;
+    my @out;
+    my $last;
+    for my $block (@$blocks) {
+	if ($last) {
+	    if ($last->[1] + 1 == $block->[0]) {
+		if ($verbose) {
+		    printf "Continuous from %X to %X\n",
+		        $last->[1], $block->[0];
+		}
+		$last->[1] = $block->[1];
+	    }
+	    else {
+		if ($verbose) {
+		    printf ("Pushing %x-%x\n", @$last);
+		}
+		push @out, $last;
+		$last = $block;
+	    }
+	}
+	else {
+	    if ($verbose) {
+		printf "first %x %x\n", $block->[0], $block->[1];
+	    }
+	    push @out, $block;
+	    $last = $block;
+	}
+    }
+    if ($verbose) {
+	printf ("Pushing %x-%x\n", @$last);
+    }
+    push @out, $last;
+    return @out;
+}
