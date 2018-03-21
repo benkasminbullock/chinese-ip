@@ -3,13 +3,53 @@ use warnings;
 use strict;
 use Getopt::Long;
 use IP::Tools ':all';
+use Date::Calc 'Localtime';
+
+my $verbose;
+
+my ($year, $month) = Localtime (time ());
+my $nowmonth = sprintf ("%04d%02d", $year, $month);
+if ($verbose) {
+    print "Time today looks like $nowmonth\n";
+}
+my $topdir = '/home/ben/data/maxmind-geolite';
+my @dirs = <$topdir/GeoLite2-Country-CSV_*>;
+@dirs = grep { -d $_ } @dirs;
+if ($verbose) {
+print "Directories: @dirs\n";
+}
+my %dates;
+my $bestdate;
+
+for my $dir (@dirs) {
+    if ($dir =~ /([0-9]+)$/) {
+	my $date = $1;
+	$dates{$date} = $dir;
+	if ($verbose) {
+	    print "Found $date\n";
+	}
+	if ($date =~ /^$nowmonth/) {
+	    $bestdate = $date;
+	    if ($verbose) {
+		print "Best date is $bestdate.\n";
+	    }
+	    last;
+	}
+    }
+}
+if (! $bestdate) {
+    my @dates = sort {$a <=> $b} keys %dates;
+    $bestdate = $dates[-1];
+    print "Best date is $bestdate, use $topdir/down2.pl to download data again.\n";
+}
 
 my $outfile = 'block-china-data.c';
-my $infile = '/home/ben/data/maxmind-geolite/GeoLite2-Country-CSV_20180306//GeoLite2-Country-Blocks-IPv4.csv';
+my $infile = "$topdir/GeoLite2-Country-CSV_$bestdate/GeoLite2-Country-Blocks-IPv4.csv";
 my $additional = 'additional.txt';
 
 my $ok = GetOptions (
-    "verbose" => \my $verbose,
+    # Debugging flag
+    "verbose" => \$verbose,
     "help" => \my $help,
     "outfile=s" => \$outfile,
     "infile=s" => \$infile,

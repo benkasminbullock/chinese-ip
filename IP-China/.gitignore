@@ -9,3 +9,5 @@ MANIFEST
 ip-tools.[ch]
 block-china-data.h
 README
+# Distribution files
+IP-China-[0-9]*
