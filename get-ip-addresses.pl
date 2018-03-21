@@ -5,7 +5,7 @@ use Getopt::Long;
 use IP::Tools ':all';
 
 my $outfile = 'block-china-data.c';
-my $infile = '/home/ben/data/maxmind-geolite/GeoIPCountryWhois.csv';
+my $infile = '/home/ben/data/maxmind-geolite/GeoLite2-Country-CSV_20180306//GeoLite2-Country-Blocks-IPv4.csv';
 my $additional = 'additional.txt';
 
 my $ok = GetOptions (
@@ -42,7 +42,7 @@ my @china;
 
 open my $in, "<", $infile or die $!;
 while (<$in>) {
-    if (/,"CN",/) {
+    if (/,1814991,/) {
         if (/$errata/) {
             if ($verbose) {
                 chomp;
@@ -103,20 +103,22 @@ exit;
 sub get_start_end
 {
     my ($china, $line) = @_;
-    my ($startip, $endip, $start, $end) = split /,/, $line;
-    $start =~ s/"//g;
-    $end =~ s/"//g;
-    push @$china, [$start, $end];
-    # if ($cidr =~ $cidr_re) {
-    # 	my $ip = $1;
-    # 	my $logmask = $2;
-	
-    # 	my ($start, $end) = cidr_to_ip_range ($ip, $logmask);
-    # 	push @$china, [$start, $end];
-    # }
-    # else {
-    # 	print STDERR "$.: '$cidr' doesn't match regex.\n";
-    # }
+#    my ($startip, $endip, $start, $end) = split /,/, $line;
+#    $start =~ s/"//g;
+#    $end =~ s/"//g;
+#    push @$china, [$start, $end];
+my @line = split /,/, $line;
+my $cidr = $line[0];
+    if ($cidr =~ $cidr_re) {
+    	my $ip = $1;
+    	my $logmask = $2;
+    	
+    	my ($start, $end) = cidr_to_ip_range ($ip, $logmask);
+    	push @$china, [$start, $end];
+    }
+    else {
+    	print STDERR "$.: '$cidr' doesn't match regex.\n";
+    }
 }
 
 # Given a line of the form 1.2.3.4 - 5.6.7.8 from the file specified
