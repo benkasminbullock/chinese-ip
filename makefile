@@ -1,6 +1,6 @@
 CFLAGS=-Wall -g
 OBJ=block-china-test.o block-china-data.o ip-tools.o
-INFILE=/home/ben/data/maxmind-geolite/GeoLite2-Country-CSV_20160412/GeoLite2-Country-Blocks-IPv4.csv
+INFILE=/home/ben/data/maxmind-geolite/GeoLite2-Country-CSV_20180306/GeoLite2-Country-Blocks-IPv4.csv
 
 block-china-test:	$(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@
@@ -21,7 +21,7 @@ block-china-data.c:	get-ip-addresses.pl $(INFILE)
 ip-tools.o:	ip-tools.c ip-tools.h
 	$(CC) $(CFLAGS) -c ip-tools.c
 
-IPTDIR=/home/ben/projects/IP-Tools
+IPTDIR=/home/ben/projects/ip-tools
 
 ip-tools.c:	$(IPTDIR)/$@
 	if [ -f $@ ]; then chmod 0644 $@; fi
