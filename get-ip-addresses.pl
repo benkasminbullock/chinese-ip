@@ -81,7 +81,7 @@ my @china;
 
 # Read the MaxMind file.
 
-open my $in, "<", $infile or die $!;
+open my $in, "<", $infile or die "Can't open $infile: $!";
 while (<$in>) {
     if (/,1814991,/) {
         if (/$errata/) {
