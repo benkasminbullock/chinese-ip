@@ -6,7 +6,8 @@ use Deploy 'do_system';
 use Test::More;
 my $x = './block-china-test';
 if (! -f $x) {
-    do_system ("make $x");
+    # Don't do "make" here since this script is run by make test.
+    die "Rebuild $x";
 }
 my @tests = (
     # Not Chinese

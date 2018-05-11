@@ -33,5 +33,5 @@ clean:
 	ip-tools.[ch]
 
 test:	test.pl block-china-test
-	./test.pl
+	prove ./test.pl
 
