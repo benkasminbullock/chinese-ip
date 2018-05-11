@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "ip-tools.h"
 #include "block-china-data.h"
 

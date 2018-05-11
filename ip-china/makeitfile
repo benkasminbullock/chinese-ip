@@ -1,0 +1,28 @@
+all: block-china-data.c block-china-data.h ip-tools.c ip-tools.h
+
+objs: block-china-data.o ip-tools.o
+
+ip-tools.h: ip-tools.c
+	cfunctions ip-tools.c
+
+ip-tools.c: ../ip-tools.c
+	cp -f ../ip-tools.c .
+
+block-china.h: block-china.c
+	cfunctions block-china.c
+
+block-china.c: ../block-china.c
+	cp -f ../block-china.c .
+
+../ip-tools.c:
+	cd ..;make ip-tools.c
+
+../block-china.c:
+	cd ..;make block-china.c
+
+clean:
+	rm -f block-china-data.[cho] ip-tools.[cho]
+
+# Local variables:
+# mode: makefile
+# End:

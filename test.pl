@@ -3,6 +3,7 @@ use warnings;
 use strict;
 use IPC::Run3;
 use Deploy 'do_system';
+use Test::More;
 my $x = './block-china-test';
 if (! -f $x) {
     do_system ("make $x");
@@ -24,12 +25,13 @@ my @tests = (
 for my $test (@tests) {
     my $ip = $test->[0];
     run3 ([$x, $ip], undef, \my $out, \my $err);
-    if ($out == $test->[1]) {
-        print "OK.\n";
+    my $chinese = $test->[1];
+    if ($chinese) {
+	unlike ($out, qr/not found/i, "$ip found");
     }
     else {
-        print "Wrong for $ip.\n";
+	like ($out, qr/not found/i, "$ip not found");
     }
-#    print "$out\n";
 }
+done_testing ();
 

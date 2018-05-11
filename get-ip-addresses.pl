@@ -72,6 +72,7 @@ available from http://www.maxmind.com. The GeoLite databases are
 distributed under the Creative Commons Attribution-ShareAlike 3.0
 Unported License. */
 
+#include <stdint.h>
 #include "ip-tools.h"
 int n_china_ips = $n_china_ips;
 ip_block_t china_ips[$n_china_ips] = {
