@@ -7,12 +7,15 @@ use Geolite ':all';
 use Deploy qw/batch_edit do_system/;
 use File::Slurper qw/read_text write_text/;
 BEGIN: {
-#    do_system ("./build.pl");
-    use lib "$Bin/blib/lib";
+    # Ensure that the most recent version is already built so the
+    # version is there.
+    do_system ("cd $Bin;perl Makefile.PL > /dev/null;make > /dev/null");
     use lib "$Bin/blib/arch";
+    use lib "$Bin/blib/lib";
     use IP::China;
 };
-my $verbose = 1;
+my $verbose;
+#my $verbose = 1;
 my $current = $IP::China::VERSION;
 my $version = get_best_date ();
 if ($current ne $version) {
@@ -25,7 +28,7 @@ if ($current ne $version) {
 }
 else {
     if ($verbose) {
-	print "PM version is current.\n";
+	print "PM version $current is already at best value $version.\n";
     }
 }
 my $date = sprintf ("%.4s-%.2s-%.2s", substr ($version, 0, 4),
@@ -39,7 +42,9 @@ EOF
 my $chg = "$Bin/Changes";
 my $text = read_text ($chg);
 if ($text =~ /\Q$version/) {
-    warn "$chg already updated";
+    if ($verbose) {
+	print "$chg already contains $version.\n";
+    }
 }
 else {
     $text = $update . $text;
