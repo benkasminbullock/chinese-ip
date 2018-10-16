@@ -9,7 +9,7 @@ use File::Slurper qw/read_text write_text/;
 BEGIN: {
     # Ensure that the most recent version is already built so the
     # version is there.
-    do_system ("cd $Bin;perl Makefile.PL > /dev/null;make > /dev/null");
+    do_system ("cd $Bin;make -f makeitfile;perl Makefile.PL > /dev/null;make > /dev/null");
     use lib "$Bin/blib/arch";
     use lib "$Bin/blib/lib";
     use IP::China;
@@ -50,6 +50,8 @@ else {
     $text = $update . $text;
     write_text ($chg, $text);
 }
+do_system ("git add .;git commit -m 'Data update to $version'", $verbose);
+
 if ($verbose) {
     print "Finished updating.\n";
 }
