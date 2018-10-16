@@ -50,7 +50,7 @@ else {
     $text = $update . $text;
     write_text ($chg, $text);
 }
-do_system ("git add .;git commit -m 'Data update to $version'", $verbose);
+do_system ("git add .;git commit -m 'Data update to $version';git push", $verbose);
 
 if ($verbose) {
     print "Finished updating.\n";
