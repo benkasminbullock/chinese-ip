@@ -1,4 +1,5 @@
-all: block-china-data.c block-china-data.h ip-tools.c ip-tools.h
+all.c: block-china-data.c ip-tools.c c-single-file.pl
+	./c-single-file.pl
 
 objs: block-china-data.o ip-tools.o
 
@@ -21,7 +22,7 @@ block-china-data.c: ../block-china-data.c
 	cd ..;make block-china-data.c
 
 clean:
-	rm -f block-china-data.[cho] ip-tools.[cho]
+	rm -f block-china-data.[cho] ip-tools.[cho] all.c
 
 # Local variables:
 # mode: makefile

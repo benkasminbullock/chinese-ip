@@ -8,7 +8,7 @@ my $repo = 'https://github.com/benkasminbullock/chinese-ip';
 
 # The list of object files which are compiled with this library.
 
-my $object = 'China.o block-china-data.o ip-tools.o';
+my $object = 'China.o';
 
 WriteMakefile (
     NAME => 'IP::China',

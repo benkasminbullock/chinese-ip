@@ -2,8 +2,7 @@
 #include "perl.h"
 #include "XSUB.h"
 #include <stdint.h>
-#include "ip-tools.h"
-#include "block-china-data.h"
+#include "all.c"
 
 MODULE=IP::China PACKAGE=IP::China
 

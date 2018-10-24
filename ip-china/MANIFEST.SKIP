@@ -16,3 +16,5 @@ IP-China-[0-9\.]+\/
 ^examples/.*-out\.txt$
 ^(make-pod|build|clean)\.pl$
 ^dataupdate$
+^ip-tools\.[ch]$
+^block-china-data\.[ch]$
