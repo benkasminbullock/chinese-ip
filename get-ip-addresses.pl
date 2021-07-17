@@ -26,6 +26,10 @@ if (! $ok || $help) {
     exit;
 }
 
+if ($verbose) {
+    print "Using\n$infile\nas latest IP file.\n";
+}
+
 # The following regular expression lists errors found in the list.
 
 my $errata = 
@@ -47,7 +51,8 @@ my @china;
 
 open my $in, "<", $infile or die "Can't open $infile: $!";
 while (<$in>) {
-    if (/,1814991,/) {
+    # China / Hong Kong
+    if (/,(1814991|1819730|1668284),/) {
         if (/$errata/) {
             if ($verbose) {
                 chomp;
