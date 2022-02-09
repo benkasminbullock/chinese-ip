@@ -52,7 +52,15 @@ my @china;
 open my $in, "<", $infile or die "Can't open $infile: $!";
 while (<$in>) {
     # China / Hong Kong
-    if (/,(1814991|1819730|1668284),/) {
+    if (
+	/,(
+	     1814991
+#	 | # Hong Kong
+#	     1819730
+#	 | # Taiwan
+#	     1668284
+	 ),/x
+    ) {
         if (/$errata/) {
             if ($verbose) {
                 chomp;
